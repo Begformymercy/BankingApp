@@ -1,4 +1,4 @@
-package BankingApp;
+package BankingApplication;
 
 public class BankingAccount {
 	private int AccountID;

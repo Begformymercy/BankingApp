@@ -1,7 +1,6 @@
-package BankingApp;
+package BankingApplication;
 import java.util.*;//import scanner
 import javax.xml.stream.events.StartDocument;
-import BankingApp.BankingAccount;
 
 public class BankingAppMain {
 	
@@ -133,7 +132,10 @@ public class BankingAppMain {
 								        	if(tryDouble(input) != null) {
 								        		//change balance
 								        	}
-											System.out.println("Didn't enter a Double");	
+											else {
+												System.out.println("Didn't enter a Double");
+												break;
+											}
 											System.out.println("Enter the account ID you wish to transfer to: ");
 											//input = scan.nextLine();
 								            break;
@@ -210,7 +212,14 @@ public class BankingAppMain {
 						System.out.println("Your account balance is currently 0 would you like to make a deposit? ");
 						input = scan.nextLine();
 						if(input.toLowerCase().equals("yes")) {
-							
+							if(tryDouble(input) != null) {
+				        		//change balance
+				        	}
+							else {
+								System.out.println("Didn't enter a Double");
+								break;
+							}
+							System.out.println("You made a deposit ");
 						}
 			            break; 
 			        case 2:  
@@ -218,9 +227,23 @@ public class BankingAppMain {
 			            break; 
 			        case 3: 
 						System.out.println("Enter ammount to deposit");
+						if(tryDouble(input) != null) {
+			        		//change balance
+			        	}
+						else {
+							System.out.println("Didn't enter a Double");
+							break;
+						}
 			            break; 
 			        case 4:  
 						System.out.println("Enter ammount to withdraw");
+						if(tryDouble(input) != null) {
+			        		//change balance
+			        	}
+						else {
+							System.out.println("Didn't enter a Double");
+							break;
+						}
 			            break; 
 			        case 5:
 						System.out.println("Closed account, you are now broke");  
