@@ -1,4 +1,4 @@
-package BankingApplication;
+package com.revature.BankingApplication;
 
 public class BankingAccount {
 	private int AccountID;
