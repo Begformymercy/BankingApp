@@ -15,6 +15,16 @@ public class BankingAppMain {
 		return null;
 	}
 	
+	public Integer tryInteger(String str) {
+		try {
+			Integer newAmount = Integer.parseDouble(str);
+			return newAmount;
+		}catch (Exception e) {
+			System.out.println("Didn't make a correct selection");	
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) {
 		String employeeName = "employee";//not a customer answer, else employee is the customer for this transaction
 		String employeePass = "password";//employee password
@@ -105,28 +115,46 @@ public class BankingAppMain {
 			
 									input = scan.nextLine();
 									try {
-										int someNumber = Integer.parseInt(input);
-										
+										if(tryInteger(input) != null) {
+							        		//change balance
+							        	}
+										else {
+											System.out.println("Didn't enter an Integer");
+											break;
+										}
 										switch (someNumber) { 
-								        case 1: 
+								        case 1: //Change Primary User Password 
 											System.out.println("Changed Primary User Password");
 								            break; 
-								        case 2: 
+								        case 2: //Change Joint User Password
 											System.out.println("Changed Joint User Password");
 								            break;
-								        case 3: 
+								        case 3: //Change Account Balance
 											System.out.println("Please enter a Double");
 								        	input = scan.nextLine();
 								        	if(tryDouble(input) != null) {
 								        		//change balance
+
+												System.out.println("Here is your Balance:");
 								        	}
 											System.out.println("Didn't enter a Double");
 								            break;
-								        case 4: 
+								        case 4: //Transfer Funds Between 2 accounts
 											System.out.println("Enter the account ID you wish to transfer from: ");
-											//input = scan.nextLine();
+											input = scan.nextLine();
+											System.out.println("Please enter an Integer");
+											if(tryInteger(input) != null) {
+								        		//change balance
+								        	}
+											else {
+												System.out.println("Didn't enter an Integer");
+												break;
+											}
 											System.out.println("Enter the ammount you wish to withdrawal: ");
 											input = scan.nextLine();
+								        	if(tryDouble(input) != null) {
+								        		//change balance
+								        	}
 											System.out.println("Please enter a Double");
 								        	input = scan.nextLine();
 								        	if(tryDouble(input) != null) {
@@ -137,7 +165,15 @@ public class BankingAppMain {
 												break;
 											}
 											System.out.println("Enter the account ID you wish to transfer to: ");
-											//input = scan.nextLine();
+											input = scan.nextLine();
+											System.out.println("Please enter an Integer");
+											if(tryInteger(input) != null) {
+								        		//change balance
+								        	}
+											else {
+												System.out.println("Didn't enter an Integer");
+												break;
+											}
 								            break;
 								        default: 
 								            break; //user didn't enter any correct selection
@@ -194,10 +230,11 @@ public class BankingAppMain {
 				if(!loggedIn) {
 					System.out.println("To open an account enter 1");
 				}
-				System.out.println("To check balance enter 2");				
-				System.out.println("To make a deposit enter 3");
-				System.out.println("To make a withdrawal enter 4");
+				
 				if(loggedIn) {
+					System.out.println("To check balance enter 2");				
+					System.out.println("To make a deposit enter 3");
+					System.out.println("To make a withdrawal enter 4");
 					System.out.println("To close your account enter 5");
 				}
 				input = scan.nextLine();
