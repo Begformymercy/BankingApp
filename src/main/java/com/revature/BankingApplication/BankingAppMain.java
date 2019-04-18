@@ -3,8 +3,8 @@ import java.util.*;//import scanner
 
 public class BankingAppMain {
 	
-	static String employeeName = "employee";//not a customer answer, else employee is the customer for this transaction
-	static String employeePass = "password";//employee password
+	static String userName;//not a customer answer, else employee is the customer for this transaction
+	static String userPass;//employee password
 	static Boolean admin = false;//employee verifies they are an administrator or not, after selection, logs actions
 	static Boolean runApplication = true;
 	static Boolean loggedIn = false;//account is logged in, shouldn't need to create a new account
@@ -22,11 +22,18 @@ public class BankingAppMain {
 			System.out.println("Are you a Customer?: yes / no");	
 			input = scan.nextLine();
 			if(input.toLowerCase().equals("no")) {//Employee
-				BankingEmployee BE = new BankingEmployee("employee","password");
+				System.out.println("Please enter employee username:");
+				userName = scan.nextLine();
+				System.out.println("Please enter employee password:");
+				userPass = scan.nextLine();
+				BankingEmployee BE = new BankingEmployee(userName ,userPass);
 				BE.menu();	
-			}else if(input.toLowerCase().equals("yes")){//Customer
-				
-				BankingCustomer BC = new BankingCustomer("customer","password");
+			}else if(input.toLowerCase().equals("yes")){//Customer	
+				System.out.println("Please enter username:");
+				userName = scan.nextLine();
+				System.out.println("Please enter password:");
+				userPass = scan.nextLine();
+				BankingCustomer BC = new BankingCustomer(userName,userPass);
 				BC.menu();		
 			}
 			//Logs should be done in account or here?			
@@ -37,5 +44,4 @@ public class BankingAppMain {
 		}while(runApplication);
 		scan.close();
 	}
-
 }

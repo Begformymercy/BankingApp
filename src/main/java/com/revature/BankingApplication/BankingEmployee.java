@@ -1,10 +1,11 @@
 package com.revature.BankingApplication;
 
 import java.util.Scanner;
+import java.io.*;
 
 public class BankingEmployee {
-	public String EmployeeNameString;
-	public String EmployeePassString;
+	public String EmployeeName;
+	public String EmployeePass;
 	public BankingAccount[] BAs;
 	
 	String input ="";
@@ -15,8 +16,8 @@ public class BankingEmployee {
 	int result;//int casting variable
 	
 	public BankingEmployee(String employeeName, String employeePass) {
-		this.EmployeeNameString=employeeName;
-		this.EmployeePassString=employeePass;
+		this.EmployeeName=employeeName;
+		this.EmployeePass=employeePass;
 	}
 	
 	public Boolean approveAccounts() {
@@ -24,7 +25,7 @@ public class BankingEmployee {
 	}
 	
 	
-	public static Integer tryInteger(String str) {
+	public Integer tryInteger(String str) {
 		try {
 			Integer newAmount = Integer.parseInt(str);
 			return newAmount;
@@ -34,7 +35,7 @@ public class BankingEmployee {
 		return null;
 	}
 	
-	public static Double tryDouble(String str) {
+	public Double tryDouble(String str) {
 		try {
 			Double newAmount = Double.parseDouble(str);
 			return newAmount;
@@ -44,68 +45,88 @@ public class BankingEmployee {
 		return null;
 	}
 	
+	public Boolean readEmployeeFile(String EmployeeUser, String EmployeePass) {
+		String employeeFile = "Employee.txt";
+		String line = null;
+		
+		try {
+			FileReader fileReader = new FileReader(employeeFile);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while((line = bufferedReader.readLine()) !=null) {
+				String [] words = line.split(" ");				
+				if(words[0].equals(EmployeeUser)&&words[1].equals(EmployeePass)) {
+					if(words[2].equals("true"))
+						admin=true;
+					return true;					
+				}
+			}
+			bufferedReader.close();
+		}
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                		employeeFile + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + employeeFile + "'");  
+        }
+		return false;//cannot log in as employee	      
+	}
+	
 	public void menu() {
-		System.out.println("Please enter employee username:");
+		if(!readEmployeeFile(EmployeeName,EmployeePass)) {
+			System.out.println("Sorry Login is incorrect or not in database");
+			return;
+		}
+		//admin check on log in
+		System.out.println("To approve or deny accounts press 1");
+		if(admin)
+			System.out.println("To edit accounts enter 2");
 		input = scan.nextLine();
-		if(input.equals(employeeName)) {
-			System.out.println("Please enter employee password:");
-			input = scan.nextLine();
-			if(input.equals(employeePass)) {
-				//admin check on log in
-				if(!admin)
-					admin=true;
-				System.out.println("To approve or deny accounts press 1");
-				System.out.println("To edit accounts enter 2");
-				
+		try {
+			result = Integer.parseInt(input);
+			switch (result) { 
+			case 1: 
+				System.out.println("You are going to approve or deny accounts");
+				System.out.println("To approve an account enter 1");
+				System.out.println("To deny an account enter 2");
+
 				input = scan.nextLine();
 				try {
-					result = Integer.parseInt(input);
-					
-					switch (result) { 
-			        case 1: 
-						System.out.println("You are going to approve or deny accounts");
-						System.out.println("To approve an account enter 1");
-						System.out.println("To deny an account enter 2");
-
+					int someNumber = Integer.parseInt(input);
+					switch (someNumber) { 
+					case 1: 
+						System.out.println("Account Approved");
+						//approve account BankingAccout.approveAccount();
+					    break; 
+					case 2:
+						System.out.println("Account Denied");	
+						//deny account if(BankingAccout.approveAccount() == false);
+					    break;
+					default: 
+						break; //user didn't enter 1 / 2
+					}
+				}catch (Exception e) {
+					System.out.println("Didn't make a correct selection");
+				}break; 
+				case 2: 
+					System.out.println("You are going to edit an account");	//edit accounts						
+					if(admin) {
+						/**
+						 * * Load up an array* of BankingAccounts, and use a nested Switch statement to pan through pages or select index
+						 */
+						System.out.println("Enter the account ID you wish to Edit: ");
+						//input = scan.nextLine();
+						System.out.println("Change Primary User Password : 1");
+						System.out.println("Change Joint User Password : 2");
+						System.out.println("Change Account Balance : 3");
+						System.out.println("Transfer Funds Between 2 accounts : 4");
+	
 						input = scan.nextLine();
 						try {
-							int someNumber = Integer.parseInt(input);
-							
-							switch (someNumber) { 
-					        case 1: 
-								System.out.println("Account Approved");
-								//approve account BankingAccout.approveAccount();
-					            break; 
-					        case 2: 
-								System.out.println("Account Denied");	
-								//deny account if(BankingAccout.approveAccount() == false);
-					            break;
-					        default: 
-					            break; //user didn't enter 1 / 2
-					        }
-						}catch (Exception e) {
-							System.out.println("Didn't make a correct selection");	
-						}	
-			            break; 
-			        case 2: 
-						System.out.println("You are going to edit an account");	//edit accounts						
-						if(admin) {
-							//log account changes made by employee as an admin
-							/**
-							 * 
-							 * Load up an array* of BankingAccounts, and use a nested Switch statement to pan through pages or select index
-							 */
-
-							System.out.println("Enter the account ID you wish to Edit: ");
-							//input = scan.nextLine();
-							
-							System.out.println("Change Primary User Password : 1");
-							System.out.println("Change Joint User Password : 2");
-							System.out.println("Change Account Balance : 3");
-							System.out.println("Transfer Funds Between 2 accounts : 4");
-	
-							input = scan.nextLine();
-							try {
 								if(tryInteger(input) != null) {
 					        		//change balance
 					        	}
@@ -184,15 +205,7 @@ public class BankingEmployee {
 			        }
 				}catch(Exception e) {
 					
-				}					
-			}else{
-				//loop out
-				System.out.println("Sorry that is not the correct employee password");	
-			}
-		}else{
-			//loop out
-			System.out.println("Sorry that is not the correct employee username");	
-		}
+				}
 	}
 
 }

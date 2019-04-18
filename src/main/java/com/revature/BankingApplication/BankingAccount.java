@@ -12,18 +12,18 @@ public class BankingAccount {
 	public Boolean Deposit;
 	public Boolean Withdrawl;
 	
-	public BankingAccount(int accountID, String primaryUserName, String jointUsername, 
-			String primaryPass, String jointPass, double balance) {
-		this.AccountID=accountID;
-		this.PrimaryUserName=primaryUserName;
-		this.JointUsername=jointUsername;
-		this.PrimaryPass=primaryPass;
-		this.JointPass=jointPass;	
-		this.Balance=balance;	
+	public BankingAccount(int accountID, String primaryUserName, String primaryPass, 
+			String jointUsername, String jointPass, double balance) {
+		this.AccountID			=accountID;
+		this.PrimaryUserName	=primaryUserName;
+		this.JointUsername		=jointUsername;
+		this.PrimaryPass		=primaryPass;
+		this.JointPass			=jointPass;	
+		this.Balance			=balance;	
 		if(jointUsername == null)
-			JointAccount = false;
-		this.AccountStatus = false;
-		this.Deposit = false;
+			this.JointAccount 	= false;
+		this.AccountStatus 		= false;
+		this.Deposit 			= false;
 		this.Withdrawl = false;
 	}
 	
